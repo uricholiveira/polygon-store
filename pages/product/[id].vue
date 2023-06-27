@@ -65,13 +65,13 @@ onUpdated(async () => {
         <div class="w-24 flex flex-wrap gap-2 align-middle">
           <span class="text-xl font-medium">Quantidade</span>
           <UInput type="number" v-model="productQuantity" size="lg" class="order-2"
-                  :disabled="product?.variants?.length == 0 || selectedVariant?.value == 0"/>
+                  :disabled="product?.variants?.length == 0 || selectedVariant == null"/>
         </div>
         <div class="flex flex-wrap gap-2 align-middle mt-2">
           <UButton size="md" block variant="solid" class="dark:text-white" label="Adicionar ao carrinho"
-                   :disabled="product?.variants?.length == 0 || selectedVariant?.value == 0" @click="addProductCart(product, selectedVariant!)"/>
+                   :disabled="product?.variants?.length == 0 || selectedVariant == null" @click="addProductCart(product, selectedVariant!)"/>
           <UButton size="md" block variant="solid" color="blue" class="bg-blue-400 hover:bg-blue-500 dark:text-white"
-                   label="Comprar agora" :disabled="product?.variants?.length == 0 || selectedVariant?.value == 0"/>
+                   label="Comprar agora" :disabled="product?.variants?.length == 0 || selectedVariant == null"/>
         </div>
       </div>
     </div>
