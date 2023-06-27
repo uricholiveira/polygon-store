@@ -27,9 +27,9 @@ onMounted(() => {
 <template>
   <footer class="border-t mt-12" v-if="showFooter">
     <div
-        class="mx-auto max-w-screen-xl space-y-8 px-4 py-8 sm:px-6 lg:space-y-16 lg:px-8"
+        class="mx-auto w-full space-y-8 px-4 py-8 sm:px-6 lg:space-y-16 lg:px-8"
     >
-      <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-8">
         <div>
           <div class="flex flex-nowrap justify-between align-middle">
             <div class="flex flex-nowrap">

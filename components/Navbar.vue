@@ -1,9 +1,25 @@
 <script setup lang="ts">
 import {RouteLocation} from "vue-router";
+import {useShoppingCart} from "~/composables/states";
+import arg from "arg";
 
 const colorMode = useColorMode()
 
-const cartItems = [1, 2, 3, 4,4,4,4,4,4, 4, 4]
+const shoppingCart = useShoppingCart()
+const total = computed(() => {
+  let y: number = 0;
+  shoppingCart.value.forEach(x => {
+    y += x.variant?.value || 0
+  })
+  return y
+})
+
+const removeProductCart = (index: number) => {
+  let newArray = [...shoppingCart.value];
+  newArray = newArray.filter((item, i) => i !== index)
+  shoppingCart.value = newArray
+}
+
 
 const isOpen = ref(false)
 const isDark = computed({
@@ -67,12 +83,12 @@ onMounted(() => {
           </NuxtLink>
         </ClientOnly>
         <ClientOnly>
-          <div class="block">
+          <div class="block" v-show="showMenuItems">
             <div class="relative py-2">
               <div class="t-0 absolute bottom-8 left-4">
-                <UBadge :label="cartItems.length.toString()" size="xs" />
+                <UBadge :label="shoppingCart.length.toString()" size="xs" />
               </div>
-              <UButton v-show="showMenuItems" icon="i-heroicons-shopping-cart" size="sm" color="gray" variant="ghost"
+              <UButton icon="i-heroicons-shopping-cart" size="sm" color="gray" variant="ghost"
                        @click="isOpen=true"/>
             </div>
           </div>
@@ -81,11 +97,11 @@ onMounted(() => {
               <UButton icon="i-heroicons-x-mark" size="sm" color="gray" variant="ghost" @click="isOpen=false"></UButton>
             </div>
             <ol class="w-full overflow-y-auto mb-32">
-              <CartItems v-for="i in cartItems"/>
+              <CartItems v-for="(i, key) in shoppingCart" :product="i.product" :variant="i.variant" :index="key" @update="removeProductCart($event)"/>
             </ol>
             <div class="absolute w-full bottom-0 pb-4">
               <div class="flex justify-center font-bold text-xl pt-2 pb-2">
-                Valor total: R$200000
+                Valor total: R${{total}}
               </div>
               <div class="flex justify-center pt-2">
                 <UButton label="Finalizar compra"/>

@@ -12,3 +12,8 @@ interface ProductCategory {
     categoryId: number;
     category: Category
 }
+
+interface ShoppingCart {
+    product?: Product;
+    variant?: Variant;
+}
