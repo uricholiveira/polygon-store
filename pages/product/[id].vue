@@ -1,16 +1,17 @@
 <script setup lang="ts">
 const route = useRoute()
+const config = useRuntimeConfig()
 
 // When accessing /posts/1, route.params.id will be 1
 console.log(route.params.id)
 const productPrice = ref(0)
 const productQuantity = ref(0)
 
-const {data} = await useFetch<Product>(`http://localhost:5000/api/product/${route.params.id}`, {})
+const {data} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.backend.url})
 const product: Product | null = data.value;
 onUpdated(async() => {
   console.log("onUpdated")
-  const {data: product} = await useFetch<Product>(`http://localhost:5000/api/product/${route.params.id}`);
+  const {data: product} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.backend.url});
 })
 </script>
 
