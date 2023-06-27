@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             backend: {
-                url: process.env.NUXT_PUBLIC_BACKEND_URL || 'http://localhost:5000/api'
+                url: ''
             }
         }
     },

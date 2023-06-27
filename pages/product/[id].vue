@@ -7,11 +7,11 @@ console.log(route.params.id)
 const productPrice = ref(0)
 const productQuantity = ref(0)
 
-const {data} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.backend.url})
+const {data} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.public.backend.url})
 const product: Product | null = data.value;
 onUpdated(async() => {
   console.log("onUpdated")
-  const {data: product} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.backend.url});
+  const {data: product} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.public.backend.url});
 })
 </script>
 

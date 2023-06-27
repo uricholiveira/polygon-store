@@ -10,13 +10,12 @@ const filteredItems = (inputType?: string) => {
   })
 }
 
-const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.backend.url});
-console.log(config.backend.url)
+const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.public.backend.url});
 console.log(products)
 
 onUpdated(async () => {
   console.log("onMounted")
-  const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.backend.url});
+  const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.public.backend.url});
 })
 </script>
 
