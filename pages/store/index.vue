@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const searchInput = ref('')
+const config = useRuntimeConfig()
 const filteredItems = (inputType?: string) => {
   return products.value?.filter(x => {
     if (inputType != null) {
@@ -9,29 +10,22 @@ const filteredItems = (inputType?: string) => {
   })
 }
 
-const {data: products} = await useFetch<Product[]>("http://localhost:5000/api/product");
+const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.backend.url});
+console.log(config.backend.url)
 console.log(products)
-</script>
-<script lang="ts">
+
 onUpdated(async () => {
   console.log("onMounted")
-  const {data: products} = await useFetch<Product[]>("http://localhost:5000/api/product");
-})
-
-onBeforeRouteUpdate(async () => {
-  console.log("onRouteUpdate")
-  const {data: products} = await useFetch<Product[]>("http://localhost:5000/api/product");
-})
-
-onUpdated(async () => {
-  console.log("onUpdated")
-  const {data: products} = await useFetch<Product[]>("http://localhost:5000/api/product");
+  const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.backend.url});
 })
 </script>
 
 <template>
   <div>
-    <UContainer class="pb-10">
+    <div class="flex flex-wrap justify-center" v-if="!products">
+      <h1>Produtos não encontrado</h1>
+    </div>
+    <UContainer class="pb-10"  v-if="products">
       <div class="flex flex-wrap mt-8 p-2">
         <span class="font-bold text-xl">Os mais buscados</span>
         <div class="w-full mt-2 gap-1 flex scroll-smooth overflow-x-auto overflow-y-hidden justify-start">
