@@ -9,7 +9,7 @@ const shoppingCart = useShoppingCart()
 const total = computed(() => {
   let y: number = 0;
   shoppingCart.value.forEach(x => {
-    y += x.variant?.value || 0
+    y += (x.variant?.value * x.quantity) || 0
   })
   return y
 })
@@ -85,7 +85,7 @@ onMounted(() => {
         <ClientOnly>
           <div class="block" v-show="showMenuItems">
             <div class="relative py-2">
-              <div class="t-0 absolute bottom-8 left-4">
+              <div class="t-0 absolute bottom-8 left-4" v-if="shoppingCart.length > 0">
                 <UBadge :label="shoppingCart.length.toString()" size="xs" />
               </div>
               <UButton icon="i-heroicons-shopping-cart" size="sm" color="gray" variant="ghost"
@@ -97,7 +97,7 @@ onMounted(() => {
               <UButton icon="i-heroicons-x-mark" size="sm" color="gray" variant="ghost" @click="isOpen=false"></UButton>
             </div>
             <ol class="w-full overflow-y-auto mb-32">
-              <CartItems v-for="(i, key) in shoppingCart" :product="i.product" :variant="i.variant" :index="key" @update="removeProductCart($event)"/>
+              <CartItems v-for="(i, key) in shoppingCart" :item="i" :index="key" @update="removeProductCart($event)"/>
             </ol>
             <div class="absolute w-full bottom-0 pb-4">
               <div class="flex justify-center font-bold text-xl pt-2 pb-2">
