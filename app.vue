@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import {Navbar} from "#components";
+import Footer from "~/components/Footer.vue";
 
 useHead({
   bodyAttrs: {
@@ -15,5 +16,6 @@ useHead({
     <NuxtLayout>
       <NuxtPage/>
     </NuxtLayout>
+    <Footer />
   </div>
 </template>

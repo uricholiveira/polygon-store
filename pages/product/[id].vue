@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Footer from "~/components/Footer.vue";
+
 const route = useRoute()
 const config = useRuntimeConfig()
 
@@ -53,13 +55,18 @@ onUpdated(async() => {
         <hr class="my-4">
         <div class="w-24 flex flex-wrap gap-2 align-middle">
           <span class="text-xl font-medium">Quantidade</span>
-          <UInput type="number" v-model="productQuantity" size="lg" class="order-2" :disabled="product?.variants?.length == 0"/>
+          <UInput type="number" v-model="productQuantity" size="lg" class="order-2" :disabled="product?.variants?.length == 0 || productPrice == 0"/>
         </div>
         <div class="flex flex-wrap gap-2 align-middle mt-2">
-          <UButton size="md" block variant="solid" class="dark:text-white" label="Adicionar ao carrinho" :disabled="product?.variants?.length == 0"/>
-          <UButton size="md" block variant="solid" color="blue" class="bg-blue-400 hover:bg-blue-500 dark:text-white" label="Comprar agora"  :disabled="product?.variants?.length == 0"/>
+          <UButton size="md" block variant="solid" class="dark:text-white" label="Adicionar ao carrinho" :disabled="product?.variants?.length == 0 || productPrice == 0"/>
+          <UButton size="md" block variant="solid" color="blue" class="bg-blue-400 hover:bg-blue-500 dark:text-white" label="Comprar agora"  :disabled="product?.variants?.length == 0 || productPrice == 0"/>
         </div>
       </div>
+    </div>
+    <div class="flex flex-wrap justify-center mt-4">
+      <span class="w-full font-medium text-center">Entrega imediata após a confirmação do pagamento.</span>
+        <p class="w-full font-medium text-center pt-1">Pagamentos realizados através da plataforma:</p>
+        <img src="/img/stripe-logo.svg" alt="Stripe Logo" class="w-24"/>
     </div>
   </UContainer>
 </template>
