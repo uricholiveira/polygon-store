@@ -5,13 +5,20 @@ import {useShoppingCart} from "~/composables/states";
 const route = useRoute()
 const config = useRuntimeConfig()
 const shoppingCart = useShoppingCart()
-const addProductCart = (product: Product, variant: Variant) => {
-  shoppingCart.value.push({product: product, variant: variant})
+const addProductCart = (product: Product, variant: Variant, quantity: number) => {
+  var existingProduct = shoppingCart.value.filter(x => {
+    return x.product.id == product.id && x.variant.id == variant.id
+  });
+  if (shoppingCart.value.length > 0 && existingProduct.length > 0) {
+    existingProduct[0].quantity += Number(quantity);
+  } else {
+    shoppingCart.value.push({product: product, variant: variant, quantity: quantity})
+  }
 }
 
 // When accessing /posts/1, route.params.id will be 1
 const selectedVariant = ref<Variant | null>(null)
-const productQuantity = ref(0)
+const productQuantity = ref(1)
 
 const {data} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.public.backend.url})
 const product: Product | null = data.value;
@@ -69,7 +76,8 @@ onUpdated(async () => {
         </div>
         <div class="flex flex-wrap gap-2 align-middle mt-2">
           <UButton size="md" block variant="solid" class="dark:text-white" label="Adicionar ao carrinho"
-                   :disabled="product?.variants?.length == 0 || selectedVariant == null" @click="addProductCart(product, selectedVariant!)"/>
+                   :disabled="product?.variants?.length == 0 || selectedVariant == null"
+                   @click="addProductCart(product, selectedVariant!, productQuantity)"/>
           <UButton size="md" block variant="solid" color="blue" class="bg-blue-400 hover:bg-blue-500 dark:text-white"
                    label="Comprar agora" :disabled="product?.variants?.length == 0 || selectedVariant == null"/>
         </div>

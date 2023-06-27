@@ -14,6 +14,7 @@ interface ProductCategory {
 }
 
 interface ShoppingCart {
-    product?: Product;
-    variant?: Variant;
+    product: Product;
+    variant: Variant;
+    quantity: number;
 }
