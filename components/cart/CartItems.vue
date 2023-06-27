@@ -16,7 +16,7 @@
         </span>
         </div>
         <span class="px-2 font-medium">
-          <UButton icon="i-heroicons-trash" class="hover:text-red-500 hover:bg-transparents" color="gray" variant="ghost" @click="console.log('aaaaa')"/>
+          <UButton icon="i-heroicons-trash" class="hover:text-red-500 hover:bg-transparents" color="gray" variant="ghost"/>
         </span>
       </div>
     </UCard>

@@ -11,10 +11,8 @@ const filteredItems = (inputType?: string) => {
 }
 
 const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.public.backend.url});
-console.log(products)
 
 onUpdated(async () => {
-  console.log("onMounted")
   const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.public.backend.url});
 })
 </script>

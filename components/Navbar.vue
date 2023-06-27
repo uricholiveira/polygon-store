@@ -97,7 +97,7 @@ onMounted(() => {
           </template>
         </ClientOnly>
         <UDropdown v-show="showMenuItems" :items="items" :popper="{ placement: 'bottom-end', strategy: 'fixed' }">
-          <UAvatar src="https://avatars.githubusercontent.com/u/48108280?&v=4" alt="Avatar" @click="console.log('aa')"/>
+          <UAvatar src="https://avatars.githubusercontent.com/u/48108280?&v=4" alt="Avatar"/>
         </UDropdown>
       </div>
     </div>
