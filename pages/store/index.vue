@@ -15,6 +15,8 @@ const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.
 onUpdated(async () => {
   const {data: products} = await useFetch<Product[]>("/product", {baseURL: config.public.backend.url});
 })
+const shoppingCart = useState<ShoppingCart[]>('shoppingCart')
+
 </script>
 
 <template>
