@@ -60,6 +60,11 @@ onMounted(() => {
       </NuxtLink>
       <div class="flex justify-end gap-2 items-center">
         <ClientOnly>
+          <NuxtLink to="/store">
+            <UButton v-show="showMenuItems" icon="i-heroicons-shopping-bag" size="sm" color="gray" variant="ghost"/>
+          </NuxtLink>
+        </ClientOnly>
+        <ClientOnly>
           <UButton v-show="showMenuItems" icon="i-heroicons-shopping-cart" size="sm" color="gray" variant="ghost" @click="isOpen=true"/>
           <USlideover v-model="isOpen">
             <div class="p-2 flex justify-end">
