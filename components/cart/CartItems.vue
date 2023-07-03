@@ -44,7 +44,7 @@ watch(() => props.item, (value, oldValue, onCleanup) => {
 
           <UButtonGroup size="sm">
             <UButton icon="i-heroicons-chevron-up-20-solid" color="white" @click="item.quantity++"/>
-            <UButton icon="i-heroicons-chevron-down-20-solid" color="gray" @click="item.quantity--"/>
+            <UButton icon="i-heroicons-chevron-down-20-solid" color="gray" @click="item.quantity--" :disabled="item.quantity <=1"/>
           </UButtonGroup>
           <span class="px-2 font-medium">
             <UButton icon="i-heroicons-trash" class="hover:text-red-500 hover:bg-transparents" color="gray"
@@ -55,8 +55,13 @@ watch(() => props.item, (value, oldValue, onCleanup) => {
       </div>
       <template #footer>
         <div class="-mx-8 -mt-1.5 -mb-1.5 flex justify-around mt-4 gap-2 align-middle">
-          <div>
-            <div class="font-medium">R${{ item.variant.value }}</div>
+          <div class="inline-flex gap-2">
+            <div class="font-medium">Valor unitário:</div>
+            <div class="w-16 order-1">
+              <UInput type="number" v-model="item.variant.value" disabled placeholder="Quantidade" size="xs"
+                      class="order-2"
+              />
+            </div>
           </div>
           <div class="inline-flex gap-2">
             <div class="font-medium">Quantidade:</div>
