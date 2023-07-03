@@ -19,6 +19,15 @@ const addProductCart = (product: Product, variant: Variant, quantity: number) =>
 // When accessing /posts/1, route.params.id will be 1
 const selectedVariant = ref<Variant | null>(null)
 const productQuantity = ref(1)
+const errorMessage = ref('')
+
+watch(productQuantity, value => {
+  if (productQuantity.value <= 0) {
+    errorMessage.value = 'Quantidade não pode ser menor ou igual a zero.'
+  } else {
+    errorMessage.value = ''
+  }
+})
 
 const {data} = await useFetch<Product>(`/product/${route.params.id}`, {baseURL: config.public.backend.url})
 const product: Product | null = data.value;
@@ -71,15 +80,17 @@ onUpdated(async () => {
         <hr class="my-4">
         <div class="w-24 flex flex-wrap gap-2 align-middle">
           <span class="text-xl font-medium">Quantidade</span>
-          <UInput type="number" v-model="productQuantity" size="lg" class="order-2"
-                  :disabled="product?.variants?.length == 0 || selectedVariant == null"/>
+          <UInput type="number" v-model="productQuantity" size="lg" class="order-2 active:bg-transparent" :color="errorMessage == ''? 'primary' : 'red'" variant="outline"
+                  :disabled="product?.variants?.length == 0 || selectedVariant == null" />
         </div>
+        <label :for="productQuantity" v-if="errorMessage" class="flex flex-nowrap w-full text-red-400 text-sm py-2">{{errorMessage}}</label>
+
         <div class="flex flex-wrap gap-2 align-middle mt-2">
           <UButton size="md" block variant="solid" class="dark:text-white" label="Adicionar ao carrinho"
-                   :disabled="product?.variants?.length == 0 || selectedVariant == null"
+                   :disabled="product?.variants?.length == 0 || selectedVariant == null || errorMessage != ''"
                    @click="addProductCart(product, selectedVariant!, productQuantity)"/>
           <UButton size="md" block variant="solid" color="blue" class="bg-blue-400 hover:bg-blue-500 dark:text-white"
-                   label="Comprar agora" :disabled="product?.variants?.length == 0 || selectedVariant == null"/>
+                   label="Comprar agora" :disabled="product?.variants?.length == 0 || selectedVariant == null || errorMessage != ''"/>
         </div>
       </div>
     </div>
