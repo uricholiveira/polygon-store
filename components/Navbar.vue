@@ -38,6 +38,9 @@ const items = [
     },
     {
       label: 'Meus pedidos',
+      click: () => {
+        navigateTo('/order')
+      }
     },
   ],
   [
@@ -67,6 +70,27 @@ watch(route, value => {
 onMounted(() => {
   setupMenuItems(route)
 })
+
+
+import {useLocalStorage, useSessionStorage} from "@vueuse/core";
+import Stripe from "stripe";
+
+const products = useLocalStorage<ShoppingCart[]>("shoppingCart", () => [])
+
+const config = useRuntimeConfig()
+
+async function handleCheckout() {
+  console.log('Products', products.value)
+  const {data} = await useFetch('/api/cart', {
+    method: 'post',
+    body: products.value
+  })
+
+  products.value = []
+
+  useSessionStorage<string | undefined>("orderId", () => data.value?.id)
+  await navigateTo(data.value?.url, {external: true})
+}
 </script>
 
 <template>
@@ -104,7 +128,7 @@ onMounted(() => {
                 Valor total: R${{total}}
               </div>
               <div class="flex justify-center pt-2">
-                <UButton label="Finalizar compra"/>
+                <UButton label="Finalizar compra" @click="handleCheckout"/>
               </div>
             </div>
           </USlideover>
