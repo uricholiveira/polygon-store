@@ -28,7 +28,8 @@ export default defineEventHandler(async (event) => {
     });
     console.log("Session:", session);
 
-    const response = await $fetch('http://localhost:5000/api/order', {
+    const response = await $fetch('/api/order', {
+        baseURL: process.env.NUXT_PUBLIC_BACKEND_URL || "https://polygon-store-api.onrender.com/api",
         method: 'post',
         body: {
             referenceId: session.id,

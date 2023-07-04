@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {useFetch} from "#app";
 
-const {data} = await useFetch<Order[]>(`http://localhost:5000/api/order/all`, {
+const config = useRuntimeConfig()
+const {data} = await useFetch<Order[]>(`/order/all`, {
+  baseURL: config.public.backend.url,
   method: 'get',
 })
 
