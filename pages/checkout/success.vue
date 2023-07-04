@@ -2,12 +2,14 @@
 import {useLocalStorage, useSessionStorage} from "@vueuse/core";
 import {useFetch, useLazyFetch} from "#app";
 import {$fetch} from "ofetch";
+const config = useRuntimeConfig()
 
 const orderId = useSessionStorage<string | undefined>("orderId", () => undefined)
 console.log("OrderId:", orderId)
 
-const {data: order} = await useFetch<Order>(`http://localhost:5000/api/order`, {
+const {data: order} = await useFetch<Order>(`/api/order`, {
   method: 'get',
+  baseURL: config.public.backend.url,
   query: {
     referenceId: orderId
   },
