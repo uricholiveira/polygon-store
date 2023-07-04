@@ -1,5 +1,6 @@
 interface Product {
     id: number;
+    referenceId?: string;
     description: string;
     imageUrl: string;
     categories?: ProductCategory[];

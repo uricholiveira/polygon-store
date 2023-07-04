@@ -41,7 +41,6 @@ watch(() => props.item, (value, oldValue, onCleanup) => {
           <p class="w-full text-sm font-medium">{{ item.variant.description }}</p>
         </div>
         <div>
-
           <UButtonGroup size="sm">
             <UButton icon="i-heroicons-chevron-up-20-solid" color="white" @click="item.quantity++"/>
             <UButton icon="i-heroicons-chevron-down-20-solid" color="gray" @click="item.quantity--" :disabled="item.quantity <=1"/>
@@ -51,7 +50,6 @@ watch(() => props.item, (value, oldValue, onCleanup) => {
                      variant="ghost" @click="removeProductCart(index)"/>
         </span>
         </div>
-
       </div>
       <template #footer>
         <div class="-mx-8 -mt-1.5 -mb-1.5 flex justify-around mt-4 gap-2 align-middle">

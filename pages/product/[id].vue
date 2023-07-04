@@ -94,7 +94,7 @@ onUpdated(async () => {
         </div>
       </div>
     </div>
-    <div class="flex flex-wrap justify-center mt-4">
+    <div class="flex flex-wrap justify-center mt-4 border-2 rounded-lg p-6 w-full">
       <span class="w-full font-medium text-center">Entrega imediata após a confirmação do pagamento.</span>
       <p class="w-full font-medium text-center pt-1">Pagamentos realizados através da plataforma:</p>
       <img src="/img/stripe-logo.svg" alt="Stripe Logo" class="w-24"/>
