@@ -5,12 +5,13 @@ export default defineEventHandler(async (event) => {
     const products: ShoppingCart[] = await readBody(event)
 
     const config = useRuntimeConfig()
+    console.log(config.public)
 
     const secret = config.stripeSecret;
     const stripe = new Stripe(secret, {
         apiVersion: "2022-11-15"
     })
-
+    //
     let body: { price: string | undefined; quantity: number; }[] = []
     products?.forEach((item: ShoppingCart) => {
         body.push({
@@ -18,18 +19,16 @@ export default defineEventHandler(async (event) => {
             quantity: item.quantity
         })
     })
-    console.log(body)
-
+    //
     const session = await stripe.checkout.sessions.create({
         line_items: body,
         mode: 'payment',
-        success_url: 'http://localhost:3000/checkout/success',
-        cancel_url: 'http://localhost:3000/checkout/failed',
+        success_url: `${config.public.frontend.url}/checkout/success`,
+        cancel_url: `${config.public.frontend.url}/checkout/failed`,
     });
-    console.log("Session:", session);
-
-    const response = await $fetch('/api/order', {
-        baseURL: process.env.NUXT_PUBLIC_BACKEND_URL || "https://polygon-store-api.onrender.com/api",
+    //
+    const response = await $fetch('/order', {
+        baseURL: config.public.backend.url|| process.env.NUXT_PUBLIC_BACKEND_URL,
         method: 'post',
         body: {
             referenceId: session.id,

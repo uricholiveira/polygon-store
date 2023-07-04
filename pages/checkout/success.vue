@@ -7,7 +7,7 @@ const config = useRuntimeConfig()
 const orderId = useSessionStorage<string | undefined>("orderId", () => undefined)
 console.log("OrderId:", orderId)
 
-const {data: order} = await useFetch<Order>(`/api/order`, {
+const {data: order} = await useFetch<Order>(`order`, {
   method: 'get',
   baseURL: config.public.backend.url,
   query: {

@@ -6,6 +6,9 @@ export default defineNuxtConfig({
         public: {
             backend: {
                 url: ''
+            },
+            frontend: {
+                url: ''
             }
         }
     },
